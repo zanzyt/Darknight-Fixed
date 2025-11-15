@@ -1,0 +1,4 @@
+C:\Dark\DarkNight\obj\Debug\DarkNight.csproj.AssemblyReference.cache
+C:\Dark\DarkNight\obj\Debug\DarkNight.csproj.CoreCompileInputs.cache
+E:\Dark\DarkNight\obj\Debug\DarkNight.csproj.AssemblyReference.cache
+E:\Dark\DarkNight\obj\Debug\DarkNight.csproj.CoreCompileInputs.cache

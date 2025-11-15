@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A7BB2803-943E-4D20-973A-41726D922436}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DarkNight</RootNamespace>
+    <AssemblyName>DarkNight</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>latest</LangVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="com.rlabrecque.steamworks.net">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\com.rlabrecque.steamworks.net.dll</HintPath>
+    </Reference>
+    <Reference Include="HighlightingSystem">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\HighlightingSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.ClipperLib">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\Pathfinding.ClipperLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.Ionic.Zip.Reduced">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\Pathfinding.Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.JsonFx">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\Pathfinding.JsonFx.dll</HintPath>
+    </Reference>
+    <Reference Include="Pathfinding.Poly2Tri">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\Pathfinding.Poly2Tri.dll</HintPath>
+    </Reference>
+    <Reference Include="SDG.Glazier.Runtime">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\SDG.Glazier.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="SDG.HostBans.Runtime">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\SDG.HostBans.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="SDG.NetPak.Runtime">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\SDG.NetPak.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="SDG.NetTransport">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\SDG.NetTransport.dll</HintPath>
+    </Reference>
+    <Reference Include="StandardAssets">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\StandardAssets.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>..\..\Users\karin\OneDrive\Рабочий стол\Mustor\Dnspy23.06.24\bin\System.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>..\..\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AssetBundleModule">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.AudioModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.ScreenCaptureModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.TerrainModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TerrainPhysicsModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreFontEngineModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.TextCoreFontEngineModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextCoreTextEngineModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.TextCoreTextEngineModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIElementsNativeModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.UIElementsNativeModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEx">
+      <HintPath>C:\Program Files (x86)\steam\steamapps\common\Unturned\Unturned_Data\Managed\UnityEx.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Loader.cs" />
+    <Compile Include="PlayerVehicleComponent.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShowAdmin.cs" />
+    <Compile Include="VanishPlayerComponent.cs" />
+    <Compile Include="ZahidAGA\AimbotComponent.cs" />
+    <Compile Include="ZahidAGA\AimbotCoroutines.cs" />
+    <Compile Include="ZahidAGA\AimbotOptions.cs" />
+    <Compile Include="ZahidAGA\AimbotTab.cs" />
+    <Compile Include="ZahidAGA\AllocationType.cs" />
+    <Compile Include="ZahidAGA\Assettext.cs" />
+    <Compile Include="ZahidAGA\AssetUtilities.cs" />
+    <Compile Include="ZahidAGA\AssetVariables.cs" />
+    <Compile Include="ZahidAGA\AttributeManager.cs" />
+    <Compile Include="ZahidAGA\BindOptions.cs" />
+    <Compile Include="ZahidAGA\ColorOptions.cs" />
+    <Compile Include="ZahidAGA\ColorUtilities.cs" />
+    <Compile Include="ZahidAGA\ColorVariable.cs" />
+    <Compile Include="ZahidAGA\ComponentAttribute.cs" />
+    <Compile Include="ZahidAGA\ConfigManager.cs" />
+    <Compile Include="ZahidAGA\CoroutineComponent.cs" />
+    <Compile Include="ZahidAGA\Drawing.cs" />
+    <Compile Include="ZahidAGA\DrawUtilities.cs" />
+    <Compile Include="ZahidAGA\DropDown.cs" />
+    <Compile Include="ZahidAGA\EmbedColor.cs" />
+    <Compile Include="ZahidAGA\ESPBox.cs" />
+    <Compile Include="ZahidAGA\ESPBox2.cs" />
+    <Compile Include="ZahidAGA\ESPComponent.cs" />
+    <Compile Include="ZahidAGA\ESPCoroutines.cs" />
+    <Compile Include="ZahidAGA\ESPObject.cs" />
+    <Compile Include="ZahidAGA\ESPObject2.cs" />
+    <Compile Include="ZahidAGA\ESPOptions.cs" />
+    <Compile Include="ZahidAGA\ESPTarget.cs" />
+    <Compile Include="ZahidAGA\ESPVariables.cs" />
+    <Compile Include="ZahidAGA\ESPVisual.cs" />
+    <Compile Include="ZahidAGA\Extensions.cs" />
+    <Compile Include="ZahidAGA\FriendUtilities.cs" />
+    <Compile Include="ZahidAGA\G.cs" />
+    <Compile Include="ZahidAGA\Hotkey.cs" />
+    <Compile Include="ZahidAGA\HotkeyComponent.cs" />
+    <Compile Include="ZahidAGA\HotkeyOptions.cs" />
+    <Compile Include="ZahidAGA\HotkeyTab.cs" />
+    <Compile Include="ZahidAGA\HotkeyUtilities.cs" />
+    <Compile Include="ZahidAGA\HwidChanger.cs" />
+    <Compile Include="ZahidAGA\IcoSphere.cs" />
+    <Compile Include="ZahidAGA\InitializerAttribute.cs" />
+    <Compile Include="ZahidAGA\InteractionOptions.cs" />
+    <Compile Include="ZahidAGA\ItemCoroutines.cs" />
+    <Compile Include="ZahidAGA\ItemCoroutines2.cs" />
+    <Compile Include="ZahidAGA\ItemOptionList.cs" />
+    <Compile Include="ZahidAGA\ItemOptions.cs" />
+    <Compile Include="ZahidAGA\Items.cs" />
+    <Compile Include="ZahidAGA\ItemsComponent.cs" />
+    <Compile Include="ZahidAGA\ItemUtilities.cs" />
+    <Compile Include="ZahidAGA\LabelLocation.cs" />
+    <Compile Include="ZahidAGA\LocalBounds.cs" />
+    <Compile Include="ZahidAGA\LocationUtilities.cs" />
+    <Compile Include="ZahidAGA\Main.cs" />
+    <Compile Include="ZahidAGA\Manager.cs" />
+    <Compile Include="ZahidAGA\MathUtilities.cs" />
+    <Compile Include="ZahidAGA\MemoryProtection.cs" />
+    <Compile Include="ZahidAGA\MenuComponent.cs" />
+    <Compile Include="ZahidAGA\MenuTab.cs" />
+    <Compile Include="ZahidAGA\MenuTabOption.cs" />
+    <Compile Include="ZahidAGA\MenuUtilities.cs" />
+    <Compile Include="ZahidAGA\MirrorCameraComponent.cs" />
+    <Compile Include="ZahidAGA\MirrorCameraOptions.cs" />
+    <Compile Include="ZahidAGA\MiscComponent.cs" />
+    <Compile Include="ZahidAGA\MiscOptions.cs" />
+    <Compile Include="ZahidAGA\MiscTab.cs" />
+    <Compile Include="ZahidAGA\Mute.cs" />
+    <Compile Include="ZahidAGA\NearestPointTest.cs" />
+    <Compile Include="ZahidAGA\NotificationWindow.cs" />
+    <Compile Include="ZahidAGA\OffSpyAttribute.cs" />
+    <Compile Include="ZahidAGA\OnSpyAttribute.cs" />
+    <Compile Include="ZahidAGA\OptimizationOptions.cs" />
+    <Compile Include="ZahidAGA\OptimizationVariables.cs" />
+    <Compile Include="ZahidAGA\OverrideAttribute.cs" />
+    <Compile Include="ZahidAGA\OverrideHelper.cs" />
+    <Compile Include="ZahidAGA\OverrideManager.cs" />
+    <Compile Include="ZahidAGA\OverrideType.cs" />
+    <Compile Include="ZahidAGA\OverrideUtilities.cs" />
+    <Compile Include="ZahidAGA\OverrideWrapper.cs" />
+    <Compile Include="ZahidAGA\OV_Cursor.cs" />
+    <Compile Include="ZahidAGA\OV_DamageTool.cs" />
+    <Compile Include="ZahidAGA\OV_Hitmark.cs" />
+    <Compile Include="ZahidAGA\OV_Input.cs" />
+    <Compile Include="ZahidAGA\OV_ItemManager.cs" />
+    <Compile Include="ZahidAGA\OV_LevelLighting.cs" />
+    <Compile Include="ZahidAGA\OV_PlayerEquipment.cs" />
+    <Compile Include="ZahidAGA\OV_PlayerInput.cs" />
+    <Compile Include="ZahidAGA\OV_PlayerInteract.cs" />
+    <Compile Include="ZahidAGA\OV_PlayerLifeUI.cs" />
+    <Compile Include="ZahidAGA\OV_PlayerPauseUI.cs" />
+    <Compile Include="ZahidAGA\OV_PlayerQuests.cs" />
+    <Compile Include="ZahidAGA\OV_Provider.cs" />
+    <Compile Include="ZahidAGA\OV_SearchForMapsInInventory.cs" />
+    <Compile Include="ZahidAGA\OV_UseableBarricade.cs" />
+    <Compile Include="ZahidAGA\OV_UseableGun.cs" />
+    <Compile Include="ZahidAGA\OV_UseableMelee.cs" />
+    <Compile Include="ZahidAGA\OV_UseableStructure.cs" />
+    <Compile Include="ZahidAGA\PlayerCam.cs" />
+    <Compile Include="ZahidAGA\PlayerCoroutines.cs" />
+    <Compile Include="ZahidAGA\PlayersTab.cs" />
+    <Compile Include="ZahidAGA\Prefab.cs" />
+    <Compile Include="ZahidAGA\Priority.cs" />
+    <Compile Include="ZahidAGA\RadarComponent.cs" />
+    <Compile Include="ZahidAGA\RadarOptions.cs" />
+    <Compile Include="ZahidAGA\RaycastComponent.cs" />
+    <Compile Include="ZahidAGA\RaycastCoroutines.cs" />
+    <Compile Include="ZahidAGA\RaycastOptions.cs" />
+    <Compile Include="ZahidAGA\RaycastUtilities.cs" />
+    <Compile Include="ZahidAGA\ReflectionVariables.cs" />
+    <Compile Include="ZahidAGA\SaveAttribute.cs" />
+    <Compile Include="ZahidAGA\SerializableColor.cs" />
+    <Compile Include="ZahidAGA\SerializableRect.cs" />
+    <Compile Include="ZahidAGA\SerializableVector.cs" />
+    <Compile Include="ZahidAGA\SerializableVector2.cs" />
+    <Compile Include="ZahidAGA\Settings.cs" />
+    <Compile Include="ZahidAGA\SettingsOptions.cs" />
+    <Compile Include="ZahidAGA\SettingsTab.cs" />
+    <Compile Include="ZahidAGA\ShaderType.cs" />
+    <Compile Include="ZahidAGA\Skin.cs" />
+    <Compile Include="ZahidAGA\SkinConfig.cs" />
+    <Compile Include="ZahidAGA\SkinOptionList.cs" />
+    <Compile Include="ZahidAGA\SkinOptions.cs" />
+    <Compile Include="ZahidAGA\SkinsTab.cs" />
+    <Compile Include="ZahidAGA\SkinsUtilities.cs" />
+    <Compile Include="ZahidAGA\SkinType.cs" />
+    <Compile Include="ZahidAGA\SpammerThread.cs" />
+    <Compile Include="ZahidAGA\SpectatorComponent.cs" />
+    <Compile Include="ZahidAGA\SphereOptions.cs" />
+    <Compile Include="ZahidAGA\SphereUtilities.cs" />
+    <Compile Include="ZahidAGA\SpyComponentAttribute.cs" />
+    <Compile Include="ZahidAGA\SpyManager.cs" />
+    <Compile Include="ZahidAGA\T.cs" />
+    <Compile Include="ZahidAGA\TargetComponent.cs" />
+    <Compile Include="ZahidAGA\TargetLimb.cs" />
+    <Compile Include="ZahidAGA\TargetLimb1.cs" />
+    <Compile Include="ZahidAGA\TargetMode.cs" />
+    <Compile Include="ZahidAGA\TargetPriority.cs" />
+    <Compile Include="ZahidAGA\ThreadAttribute.cs" />
+    <Compile Include="ZahidAGA\TracerLine.cs" />
+    <Compile Include="ZahidAGA\TrajectoryComponent.cs" />
+    <Compile Include="ZahidAGA\TrajectoryCoroutines.cs" />
+    <Compile Include="ZahidAGA\TriggerbotOptions.cs" />
+    <Compile Include="ZahidAGA\VectorUtilities.cs" />
+    <Compile Include="ZahidAGA\VertTriList.cs" />
+    <Compile Include="ZahidAGA\VisualTab.cs" />
+    <Compile Include="ZahidAGA\WeaponComponent.cs" />
+    <Compile Include="ZahidAGA\WeaponOptions.cs" />
+    <Compile Include="ZahidAGA\WeaponSave.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
