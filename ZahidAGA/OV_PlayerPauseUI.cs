@@ -19,7 +19,8 @@ namespace ZahidAGA
 		public static void OV_onClickedSuicideButton(ISleekElement button)
 		{
 			PlayerPauseUI.closeAndGotoAppropriateHUD();
-			Player.player.life.sendSuicide();
+			Player.LocalPlayer.life.sendSuicide();
 		}
 	}
 }
+
