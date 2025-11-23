@@ -399,7 +399,7 @@
     <Compile Include="Ovveride\OV_UseableMelee.cs" />
     <Compile Include="Ovveride\OV_UseableStructure.cs" />
     <Compile Include="Cheats\PlayerCam.cs" />
-    <Compile Include="Cheats\PlayerCoroutines.cs" />
+    <Compile Include="Cheats\SpyCom\PlayerCoroutines.cs" />
     <Compile Include="main\tabs\PlayersTab.cs" />
     <Compile Include="Utils\Prefab.cs" />
     <Compile Include="Utils\Priority.cs" />

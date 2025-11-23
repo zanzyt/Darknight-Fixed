@@ -146,7 +146,7 @@ namespace ZahidAGA
 		public static void OnSpied()
 		{
 			Transform transform = OptimizationVariables.MainCam.transform;
-			if (transform != null) //Я фикшу.
+			if (transform != null) 
 			{
 				Physics.Raycast(new Ray(transform.position, transform.forward), out OV_PlayerInteract.hit, (float)((OptimizationVariables.MainPlayer.look.perspective == EPlayerPerspective.THIRD) ? 6 : 4), RayMasks.PLAYER_INTERACT, QueryTriggerInteraction.UseGlobal);
 			}
@@ -381,35 +381,6 @@ namespace ZahidAGA
 								PlayerBarricadeLibraryUI.close();
 								PlayerLifeUI.open();
 								return;
-							}
-							//if (PlayerNPCDialogueUI.active)
-							//{
-							//	if (PlayerNPCDialogueUI.dialogueAnimating)
-							//	{
-							//		PlayerNPCDialogueUI.skipText();
-							//		return;
-							//	}
-							//	if (PlayerNPCDialogueUI.dialogueHasNextPage)
-							//	{
-							//		PlayerNPCDialogueUI.nextPage();
-							//		return;
-							//	}
-							//	PlayerNPCDialogueUI.close();
-							//	PlayerLifeUI.open();
-							//	return;
-							//}
-							else
-							{
-								if (PlayerNPCQuestUI.active)
-								{
-									PlayerNPCQuestUI.closeNicely();
-									return;
-								}
-								if (PlayerNPCVendorUI.active)
-								{
-									PlayerNPCVendorUI.closeNicely();
-									return;
-								}
 							}
 						}
 						else
