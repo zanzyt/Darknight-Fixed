@@ -141,11 +141,12 @@ namespace ZahidAGA
 		}
 
 		// Token: 0x0600029F RID: 671 RVA: 0x00014AE0 File Offset: 0x00012CE0
+
 		[OnSpy]
 		public static void OnSpied()
 		{
 			Transform transform = OptimizationVariables.MainCam.transform;
-			if (transform != null)
+			if (transform != null) //Я фикшу.
 			{
 				Physics.Raycast(new Ray(transform.position, transform.forward), out OV_PlayerInteract.hit, (float)((OptimizationVariables.MainPlayer.look.perspective == EPlayerPerspective.THIRD) ? 6 : 4), RayMasks.PLAYER_INTERACT, QueryTriggerInteraction.UseGlobal);
 			}
@@ -160,140 +161,144 @@ namespace ZahidAGA
 			{
 				return;
 			}
-			if (OptimizationVariables.MainPlayer.stance.stance != EPlayerStance.DRIVING && OptimizationVariables.MainPlayer.stance.stance != EPlayerStance.SITTING && !OptimizationVariables.MainPlayer.life.isDead && !OptimizationVariables.MainPlayer.workzone.isBuilding)
+			if (!OptimizationVariables.MainPlayer.life.isDead && !OptimizationVariables.MainPlayer.workzone.isBuilding)
 			{
-				if (Time.realtimeSinceStartup - OV_PlayerInteract.lastInteract > 0.1f)
+				// Only do raycasting and highlighting if NOT driving/sitting
+				if (OptimizationVariables.MainPlayer.stance.stance != EPlayerStance.DRIVING && OptimizationVariables.MainPlayer.stance.stance != EPlayerStance.SITTING)
 				{
-					int num = 0;
-					if (InteractionOptions.InteractThroughWalls && !G.BeingSpied)
+					if (Time.realtimeSinceStartup - OV_PlayerInteract.lastInteract > 0.1f)
 					{
-						if (!InteractionOptions.NoHitBarricades)
+						int num = 0;
+						if (InteractionOptions.InteractThroughWalls && !G.BeingSpied)
 						{
-							num |= 134217728;
+							if (!InteractionOptions.NoHitBarricades)
+							{
+								num |= 134217728;
+							}
+							if (!InteractionOptions.NoHitItems)
+							{
+								num |= 8192;
+							}
+							if (!InteractionOptions.NoHitResources)
+							{
+								num |= 16384;
+							}
+							if (!InteractionOptions.NoHitStructures)
+							{
+								num |= 268435456;
+							}
+							if (!InteractionOptions.NoHitVehicles)
+							{
+								num |= 67108864;
+							}
+							if (!InteractionOptions.NoHitEnvironment)
+							{
+								num |= 1671168;
+							}
 						}
-						if (!InteractionOptions.NoHitItems)
+						else
 						{
-							num |= 8192;
+							num = RayMasks.PLAYER_INTERACT;
 						}
-						if (!InteractionOptions.NoHitResources)
+						OV_PlayerInteract.lastInteract = Time.realtimeSinceStartup;
+						float num2 = ((InteractionOptions.InteractThroughWalls && !G.BeingSpied) ? 20f : 4f);
+						Physics.Raycast(new Ray(Camera.main.transform.position, Camera.main.transform.forward), out OV_PlayerInteract.hit, (OptimizationVariables.MainPlayer.look.perspective == EPlayerPerspective.THIRD) ? (num2 + 2f) : num2, num, QueryTriggerInteraction.UseGlobal);
+					}
+					Transform transform = ((!(OV_PlayerInteract.hit.collider != null)) ? null : OV_PlayerInteract.hit.collider.transform);
+					if (transform != OV_PlayerInteract.focus)
+					{
+						if (OV_PlayerInteract.focus != null && PlayerInteract.interactable != null)
 						{
-							num |= 16384;
+							InteractableDoor componentInParent = OV_PlayerInteract.focus.GetComponentInParent<InteractableDoor>();
+							if (componentInParent != null)
+							{
+								HighlighterTool.unhighlight(componentInParent.transform);
+							}
+							else
+							{
+								HighlighterTool.unhighlight(PlayerInteract.interactable.transform);
+							}
 						}
-						if (!InteractionOptions.NoHitStructures)
+
+						OV_PlayerInteract.focus = null;
+						OV_PlayerInteract.target = null;
+						OV_PlayerInteract.interactable = null;
+						OV_PlayerInteract.interactable2 = null;
+
+						if (transform != null)
 						{
-							num |= 268435456;
-						}
-						if (!InteractionOptions.NoHitVehicles)
-						{
-							num |= 67108864;
-						}
-						if (!InteractionOptions.NoHitEnvironment)
-						{
-							num |= 1671168;
+							OV_PlayerInteract.focus = transform;
+							OV_PlayerInteract.interactable = OV_PlayerInteract.focus.GetComponentInParent<Interactable>();
+							OV_PlayerInteract.interactable2 = OV_PlayerInteract.focus.GetComponentInParent<Interactable2>();
+
+							if (PlayerInteract.interactable != null)
+							{
+								OV_PlayerInteract.target = PlayerInteract.interactable.transform.FindChildRecursive("Target");
+
+								if (PlayerInteract.interactable.checkInteractable())
+								{
+									if (PlayerUI.window.isEnabled)
+									{
+										if (PlayerInteract.interactable.checkUseable())
+										{
+											Color green;
+											if (!PlayerInteract.interactable.checkHighlight(out green))
+												green = Color.green;
+
+											InteractableDoor componentInParent2 = OV_PlayerInteract.focus.GetComponentInParent<InteractableDoor>();
+											if (componentInParent2 != null)
+											{
+												HighlighterTool.highlight(componentInParent2.transform, green);
+											}
+											else
+											{
+												HighlighterTool.highlight(PlayerInteract.interactable.transform, green);
+											}
+										}
+										else
+										{
+											Color red = Color.red;
+
+											InteractableDoor componentInParent3 = OV_PlayerInteract.focus.GetComponentInParent<InteractableDoor>();
+											if (componentInParent3 != null)
+											{
+												HighlighterTool.highlight(componentInParent3.transform, red);
+											}
+											else
+											{
+												HighlighterTool.highlight(PlayerInteract.interactable.transform, red);
+											}
+										}
+									}
+								}
+								else
+								{
+									OV_PlayerInteract.target = null;
+									OV_PlayerInteract.interactable = null;
+								}
+							}
 						}
 					}
 					else
 					{
-						num = RayMasks.PLAYER_INTERACT;
-					}
-					OV_PlayerInteract.lastInteract = Time.realtimeSinceStartup;
-					float num2 = ((InteractionOptions.InteractThroughWalls && !G.BeingSpied) ? 20f : 4f);
-					Physics.Raycast(new Ray(Camera.main.transform.position, Camera.main.transform.forward), out OV_PlayerInteract.hit, (OptimizationVariables.MainPlayer.look.perspective == EPlayerPerspective.THIRD) ? (num2 + 2f) : num2, num, QueryTriggerInteraction.UseGlobal);
-				}
-				Transform transform = ((!(OV_PlayerInteract.hit.collider != null)) ? null : OV_PlayerInteract.hit.collider.transform);
-				if (transform != OV_PlayerInteract.focus)
-				{
-					if (OV_PlayerInteract.focus != null && PlayerInteract.interactable != null)
-					{
-						InteractableDoor componentInParent = OV_PlayerInteract.focus.GetComponentInParent<InteractableDoor>();
-						if (componentInParent != null)
+						if (OV_PlayerInteract.focus != null && PlayerInteract.interactable != null)
 						{
-							HighlighterTool.unhighlight(componentInParent.transform);
-						}
-						else
-						{
-							HighlighterTool.unhighlight(PlayerInteract.interactable.transform);
-						}
-					}
-
-					OV_PlayerInteract.focus = null;
-					OV_PlayerInteract.target = null;
-					OV_PlayerInteract.interactable = null;
-					OV_PlayerInteract.interactable2 = null;
-
-					if (transform != null)
-					{
-						OV_PlayerInteract.focus = transform;
-						OV_PlayerInteract.interactable = OV_PlayerInteract.focus.GetComponentInParent<Interactable>();
-						OV_PlayerInteract.interactable2 = OV_PlayerInteract.focus.GetComponentInParent<Interactable2>();
-
-						if (PlayerInteract.interactable != null)
-						{
-							OV_PlayerInteract.target = PlayerInteract.interactable.transform.FindChildRecursive("Target");
-
-							if (PlayerInteract.interactable.checkInteractable())
+							InteractableDoor componentInParent4 = OV_PlayerInteract.focus.GetComponentInParent<InteractableDoor>();
+							if (componentInParent4 != null)
 							{
-								if (PlayerUI.window.isEnabled)
-								{
-									if (PlayerInteract.interactable.checkUseable())
-									{
-										Color green;
-										if (!PlayerInteract.interactable.checkHighlight(out green))
-											green = Color.green;
-
-										InteractableDoor componentInParent2 = OV_PlayerInteract.focus.GetComponentInParent<InteractableDoor>();
-										if (componentInParent2 != null)
-										{
-											HighlighterTool.highlight(componentInParent2.transform, green);
-										}
-										else
-										{
-											HighlighterTool.highlight(PlayerInteract.interactable.transform, green);
-										}
-									}
-									else
-									{
-										Color red = Color.red;
-
-										InteractableDoor componentInParent3 = OV_PlayerInteract.focus.GetComponentInParent<InteractableDoor>();
-										if (componentInParent3 != null)
-										{
-											HighlighterTool.highlight(componentInParent3.transform, red);
-										}
-										else
-										{
-											HighlighterTool.highlight(PlayerInteract.interactable.transform, red);
-										}
-									}
-								}
+								HighlighterTool.unhighlight(componentInParent4.transform);
 							}
 							else
 							{
-								OV_PlayerInteract.target = null;
-								OV_PlayerInteract.interactable = null;
+								HighlighterTool.unhighlight(PlayerInteract.interactable.transform);
 							}
 						}
-					}
-				}
-				else
-				{
-					if (OV_PlayerInteract.focus != null && PlayerInteract.interactable != null)
-					{
-						InteractableDoor componentInParent4 = OV_PlayerInteract.focus.GetComponentInParent<InteractableDoor>();
-						if (componentInParent4 != null)
-						{
-							HighlighterTool.unhighlight(componentInParent4.transform);
-						}
-						else
-						{
-							HighlighterTool.unhighlight(PlayerInteract.interactable.transform);
-						}
-					}
 
-					OV_PlayerInteract.focus = null;
-					OV_PlayerInteract.target = null;
-					OV_PlayerInteract.interactable = null;
-					OV_PlayerInteract.interactable2 = null;
+						OV_PlayerInteract.focus = null;
+						OV_PlayerInteract.target = null;
+						OV_PlayerInteract.interactable = null;
+						OV_PlayerInteract.interactable2 = null;
+					}
 				}
 
 				if (OptimizationVariables.MainPlayer.life.isDead)
@@ -411,7 +416,11 @@ namespace ZahidAGA
 						{
 							if (OptimizationVariables.MainPlayer.stance.stance == EPlayerStance.DRIVING || OptimizationVariables.MainPlayer.stance.stance == EPlayerStance.SITTING)
 							{
-								VehicleManager.exitVehicle();
+								if (Time.realtimeSinceStartup - OV_PlayerInteract.lastExitRequest > 0.5f)
+								{
+									VehicleManager.exitVehicle();
+									OV_PlayerInteract.lastExitRequest = Time.realtimeSinceStartup;
+								}
 								return;
 							}
 							if (OV_PlayerInteract.focus != null && PlayerInteract.interactable != null)
@@ -475,5 +484,7 @@ namespace ZahidAGA
 
 		// Token: 0x04000397 RID: 919
 		public static RaycastHit hit;
+
+		public static float lastExitRequest;
 	}
 }

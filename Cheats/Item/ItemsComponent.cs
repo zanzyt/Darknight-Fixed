@@ -27,7 +27,7 @@ namespace ZahidAGA
 		public void Start()
 		{
 			CoroutineComponent.ItemPickupCoroutine = base.StartCoroutine(ItemCoroutines.PickupItems());
-			//CoroutineComponent.ItemPickupCoroutine2 = base.StartCoroutine(ItemCoroutines2.PickupItems());
+			CoroutineComponent.ItemPickupCoroutine2 = base.StartCoroutine(ItemCoroutines2.PickupItems());
 		}
 
 		// Token: 0x040000D3 RID: 211
