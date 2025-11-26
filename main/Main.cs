@@ -150,7 +150,7 @@ namespace ZahidAGA
 				SkinsTab.Tab();
 				break;
 			case MenuTab.Settings:
-				SettingsTab.Tab();
+                SettingsTab.Tab();
 				break;
 			case MenuTab.Keybınds:
 				HotkeyTab.Tab();

@@ -255,7 +255,7 @@ namespace ZahidAGA
 				Provider.provider.achievementsService.setAchievement("Support");
 				Provider.provider.achievementsService.setAchievement("Mastermind");
 				Provider.provider.achievementsService.setAchievement("Berries");
-			}
+            }
 			GUILayout.EndScrollView();
 			GUILayout.EndArea();
 		}

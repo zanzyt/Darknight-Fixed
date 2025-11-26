@@ -169,7 +169,7 @@ namespace ZahidAGA
 						Player component = gameObject.GetComponent<Player>();
 						if ((!component || (!component.life.isDead && !FriendUtilities.IsFriendly(component))) && (!WeaponOptions.SafeZone || !LevelNodes.isPointInsideSafezone(component.transform.position, out RaycastUtilities.isSafeInfo)) && (!WeaponOptions.Admin || !component.channel.owner.isAdmin))
 						{
-							if (AimbotOptions.HitChance != 100 && new global::System.Random().Next(0, 100) >= AimbotOptions.HitChance)
+							if (AimbotOptions.HitChance != 100 && new System.Random().Next(0, 100) >= AimbotOptions.HitChance)
 							{
 								return false;
 							}

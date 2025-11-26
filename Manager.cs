@@ -7,7 +7,7 @@ namespace ZahidAGA
 	public class Manager : MonoBehaviour
 	{
 		// Token: 0x0600000F RID: 15 RVA: 0x00004B60 File Offset: 0x00002D60
-		private void Start()
+		public void Start()
 		{
 			T.DrawMaterial = new Material(Shader.Find("Hidden/Internal-Colored"))
 			{

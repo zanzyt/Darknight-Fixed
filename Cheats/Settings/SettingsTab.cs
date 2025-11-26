@@ -28,7 +28,7 @@ namespace ZahidAGA
 				{
 					MiscOptions.UISkin = "";
 					AssetUtilities.Skin = AssetUtilities.VanillaSkin;
-				}
+				} 
 				foreach (string text in AssetUtilities.GetSkins(false))
 				{
 				}
@@ -237,12 +237,11 @@ namespace ZahidAGA
 				GUILayout.EndArea();
 				break;
 			case SettingsOptions.Info:
-				GUILayout.Label("Status: Undetected or no?", Array.Empty<GUILayoutOption>());
-				GUILayout.Label("Version: 9.9.9", Array.Empty<GUILayoutOption>());
-				GUILayout.Label("Founder: : Chucky*#7578", Array.Empty<GUILayoutOption>());
-				GUILayout.Label("Founder: Zanzyt? ", Array.Empty<GUILayoutOption>());
+				GUILayout.Label("Status: Undetected", Array.Empty<GUILayoutOption>());
+				GUILayout.Label("Version: WELL 26.11.2025! ZANZYT TOP", Array.Empty<GUILayoutOption>());
+				GUILayout.Label("Founder: : Chucky", Array.Empty<GUILayoutOption>());
+				GUILayout.Label("Founder: : zanzyt ", Array.Empty<GUILayoutOption>());
 				GUILayout.Label("Discord: Exploit hub", Array.Empty<GUILayoutOption>());
-				GUILayout.Label("Youtube.com", Array.Empty<GUILayoutOption>());
 				GUILayout.EndArea();
 				break;
 			}

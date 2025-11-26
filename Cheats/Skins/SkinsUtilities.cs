@@ -65,42 +65,45 @@ namespace ZahidAGA
 
         // Token: 0x06000317 RID: 791 RVA: 0x0001901C File Offset: 0x0001721C
         public static void Apply(Skin skin, SkinType skinType)
-		{
-			if (skinType == SkinType.Weapons)
-			{
-				Dictionary<ushort, int> itemSkins = OptimizationVariables.MainPlayer.channel.owner.itemSkins;
-				if (itemSkins == null)
-				{
-					return;
-				}
+        {
+            if (skinType == SkinType.Weapons)
+            {
+                Dictionary<ushort, int> itemSkins = OptimizationVariables.MainPlayer.channel.owner.itemSkins;
+                if (itemSkins == null)
+                {
+                    return;
+                }
+
+                // Для оружия используем itemdefid из econInfo
                 ushort inventoryItemID = (ushort)skin.ID;
                 SkinOptions.SkinConfig.WeaponSkins.Clear();
-				int num;
-				if (itemSkins.TryGetValue(inventoryItemID, out num))
-				{
-					itemSkins[inventoryItemID] = skin.ID;
-				}
-				else
-				{
-					itemSkins.Add(inventoryItemID, skin.ID);
-				}
-				OptimizationVariables.MainPlayer.equipment.applySkinVisual();
-				OptimizationVariables.MainPlayer.equipment.applyMythicVisual();
-				using (Dictionary<ushort, int>.Enumerator enumerator = itemSkins.GetEnumerator())
-				{
-					while (enumerator.MoveNext())
-					{
-						KeyValuePair<ushort, int> keyValuePair = enumerator.Current;
-						SkinOptions.SkinConfig.WeaponSkins.Add(new WeaponSave(keyValuePair.Key, keyValuePair.Value));
-					}
-					return;
-				}
-			}
-			SkinsUtilities.ApplyClothing(skin, skinType);
-		}
 
-		// Token: 0x06000318 RID: 792 RVA: 0x0001911C File Offset: 0x0001731C
-		public static void ApplyClothing(Skin skin, SkinType type)
+                if (itemSkins.ContainsKey(inventoryItemID))
+                {
+                    itemSkins[inventoryItemID] = skin.ID;
+                }
+                else
+                {
+                    itemSkins.Add(inventoryItemID, skin.ID);
+                }
+
+                OptimizationVariables.MainPlayer.equipment.applySkinVisual();
+                OptimizationVariables.MainPlayer.equipment.applyMythicVisual();
+
+                foreach (var keyValuePair in itemSkins)
+                {
+                    SkinOptions.SkinConfig.WeaponSkins.Add(new WeaponSave(keyValuePair.Key, keyValuePair.Value));
+                }
+            }
+            else
+            {
+                // Для одежды используем ID ассета напрямую
+                SkinsUtilities.ApplyClothing(skin, skinType);
+            }
+        }
+
+        // Token: 0x06000318 RID: 792 RVA: 0x0001911C File Offset: 0x0001731C
+        public static void ApplyClothing(Skin skin, SkinType type)
 		{
 			if (!G.BeingSpied)
 			{
@@ -257,9 +260,7 @@ namespace ZahidAGA
         {
             var econ = EconReflection.EconInfo;
 
-            if (econ == null || econ.Count == 0)
-                return;
-
+            // Очищаем списки
             SkinOptions.SkinWeapons.Skins.Clear();
             SkinOptions.SkinClothesShirts.Skins.Clear();
             SkinOptions.SkinClothesPants.Skins.Clear();
@@ -269,37 +270,139 @@ namespace ZahidAGA
             SkinOptions.SkinClothesMask.Skins.Clear();
             SkinOptions.SkinClothesGlasses.Skins.Clear();
 
-            foreach (var pair in econ)
+            // Словарь для отслеживания уже добавленных ID
+            HashSet<int> addedIds = new HashSet<int>();
+
+            // 1. Сначала добавляем скины из econInfo (Steam Economy)
+            if (econ != null && econ.Count > 0)
             {
-                UnturnedEconInfo info = pair.Value;
-                string type = info.display_type.ToLower();
+                foreach (var pair in econ)
+                {
+                    UnturnedEconInfo info = pair.Value;
+                    string type = info.display_type?.ToLower() ?? "";
 
-                if (type.Contains("skin"))
-                    SkinOptions.SkinWeapons.Skins.Add(new Skin(info.name, info.itemdefid));
+                    if (type.Contains("skin"))
+                        SkinOptions.SkinWeapons.Skins.Add(new Skin(info.name, info.itemdefid));
+                    else if (type.Contains("shirt"))
+                        SkinOptions.SkinClothesShirts.Skins.Add(new Skin(info.name, info.itemdefid));
+                    else if (type.Contains("pants"))
+                        SkinOptions.SkinClothesPants.Skins.Add(new Skin(info.name, info.itemdefid));
+                    else if (type.Contains("backpack"))
+                        SkinOptions.SkinClothesBackpack.Skins.Add(new Skin(info.name, info.itemdefid));
+                    else if (type.Contains("vest"))
+                        SkinOptions.SkinClothesVest.Skins.Add(new Skin(info.name, info.itemdefid));
+                    else if (type.Contains("hat"))
+                        SkinOptions.SkinClothesHats.Skins.Add(new Skin(info.name, info.itemdefid));
+                    else if (type.Contains("mask"))
+                        SkinOptions.SkinClothesMask.Skins.Add(new Skin(info.name, info.itemdefid));
+                    else if (type.Contains("glass"))
+                        SkinOptions.SkinClothesGlasses.Skins.Add(new Skin(info.name, info.itemdefid));
 
-                else if (type.Contains("shirt"))
-                    SkinOptions.SkinClothesShirts.Skins.Add(new Skin(info.name, info.itemdefid));
+                    addedIds.Add(info.itemdefid);
+                }
+            }
 
-                else if (type.Contains("pants"))
-                    SkinOptions.SkinClothesPants.Skins.Add(new Skin(info.name, info.itemdefid));
+            // 2. Затем добавляем скины из ассетов игры (включая модовые)
+            var allSkinAssets = Assets.find(EAssetType.SKIN);
+            foreach (var asset in allSkinAssets)
+            {
+                if (asset is SkinAsset skinAsset)
+                {
+                    // Пропускаем если уже добавлен через econInfo
+                    if (addedIds.Contains(skinAsset.id))
+                        continue;
 
-                else if (type.Contains("backpack"))
-                    SkinOptions.SkinClothesBackpack.Skins.Add(new Skin(info.name, info.itemdefid));
+                    string skinName = skinAsset.name;
+                    if (string.IsNullOrEmpty(skinName))
+                        skinName = "Unnamed Skin " + skinAsset.id;
 
-                else if (type.Contains("vest"))
-                    SkinOptions.SkinClothesVest.Skins.Add(new Skin(info.name, info.itemdefid));
+                    // Для SkinAsset добавляем в оружие
+                    SkinOptions.SkinWeapons.Skins.Add(new Skin(skinName, skinAsset.id));
+                }
+            }
 
-                else if (type.Contains("hat"))
-                    SkinOptions.SkinClothesHats.Skins.Add(new Skin(info.name, info.itemdefid));
+            // 3. Добавляем предметы одежды из ItemAsset
+            var allItemAssets = Assets.find(EAssetType.ITEM);
+            foreach (var asset in allItemAssets)
+            {
+                if (asset is ItemAsset itemAsset)
+                {
+                    // Пропускаем если уже добавлен через econInfo
+                    if (addedIds.Contains(itemAsset.id))
+                        continue;
 
-                else if (type.Contains("mask"))
-                    SkinOptions.SkinClothesMask.Skins.Add(new Skin(info.name, info.itemdefid));
+                    string itemName = itemAsset.itemName;
+                    if (string.IsNullOrEmpty(itemName))
+                        itemName = itemAsset.name;
 
-                else if (type.Contains("glass"))
-                    SkinOptions.SkinClothesGlasses.Skins.Add(new Skin(info.name, info.itemdefid));
+                    // Определяем тип одежды по типу предмета
+                    switch (itemAsset.type)
+                    {
+                        case EItemType.SHIRT:
+                            SkinOptions.SkinClothesShirts.Skins.Add(new Skin(itemName, itemAsset.id));
+                            break;
+                        case EItemType.PANTS:
+                            SkinOptions.SkinClothesPants.Skins.Add(new Skin(itemName, itemAsset.id));
+                            break;
+                        case EItemType.BACKPACK:
+                            SkinOptions.SkinClothesBackpack.Skins.Add(new Skin(itemName, itemAsset.id));
+                            break;
+                        case EItemType.VEST:
+                            SkinOptions.SkinClothesVest.Skins.Add(new Skin(itemName, itemAsset.id));
+                            break;
+                        case EItemType.HAT:
+                            SkinOptions.SkinClothesHats.Skins.Add(new Skin(itemName, itemAsset.id));
+                            break;
+                        case EItemType.MASK:
+                            SkinOptions.SkinClothesMask.Skins.Add(new Skin(itemName, itemAsset.id));
+                            break;
+                        case EItemType.GLASSES:
+                            SkinOptions.SkinClothesGlasses.Skins.Add(new Skin(itemName, itemAsset.id));
+                            break;
+                    }
+                }
+            }
+
+            // 4. Сортируем списки для удобства
+            SortSkinHashSet(SkinOptions.SkinWeapons.Skins);
+            SortSkinHashSet(SkinOptions.SkinClothesShirts.Skins);
+            SortSkinHashSet(SkinOptions.SkinClothesPants.Skins);
+            SortSkinHashSet(SkinOptions.SkinClothesBackpack.Skins);
+            SortSkinHashSet(SkinOptions.SkinClothesVest.Skins);
+            SortSkinHashSet(SkinOptions.SkinClothesHats.Skins);
+            SortSkinHashSet(SkinOptions.SkinClothesMask.Skins);
+            SortSkinHashSet(SkinOptions.SkinClothesGlasses.Skins);
+        }
+
+        // Вспомогательный метод для сортировки HashSet скинов
+        private static void SortSkinHashSet(HashSet<Skin> skinSet)
+        {
+            // Создаем временный список для сортировки
+            List<Skin> tempList = new List<Skin>(skinSet);
+
+            // Сортируем по имени
+            tempList.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.OrdinalIgnoreCase));
+
+            // Очищаем оригинальный HashSet и добавляем отсортированные элементы
+            skinSet.Clear();
+            foreach (var skin in tempList)
+            {
+                skinSet.Add(skin);
             }
         }
 
+        // Компаратор для сортировки скинов по имени
+        private class SkinComparer : System.Collections.IComparer
+        {
+            public int Compare(object x, object y)
+            {
+                if (x is Skin skinX && y is Skin skinY)
+                {
+                    return string.Compare(skinX.Name, skinY.Name, StringComparison.OrdinalIgnoreCase);
+                }
+                return 0;
+            }
+        }
 
         // Token: 0x040003BD RID: 957
         public static Vector2 ScrollPos;

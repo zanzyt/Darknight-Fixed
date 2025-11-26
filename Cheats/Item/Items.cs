@@ -25,7 +25,7 @@ namespace ZahidAGA
 		public static InteractableItem GetNearestItem(int? pixelfov = null)
 		{
 			InteractableItem interactableItem = null;
-			foreach (Collider collider in Physics.OverlapSphere(Player.player.transform.position, 19f, 8192))
+			foreach (Collider collider in Physics.OverlapSphere(Player.LocalPlayer.transform.position, 19f, 8192))
 			{
 				if (!(collider == null) && !(collider.GetComponent<InteractableItem>() == null) && collider.GetComponent<InteractableItem>().asset != null)
 				{

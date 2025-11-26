@@ -46,7 +46,7 @@ namespace ZahidAGA
 
             // Если используется режим, который прячет визуалы — вызываем его (как в оригинале)
             if (!MiscOptions.PanicMode)
-            {
+            { //That is Darknight. 
                 DisableAllVisuals();
             }
 

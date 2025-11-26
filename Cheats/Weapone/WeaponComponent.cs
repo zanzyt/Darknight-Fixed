@@ -176,7 +176,7 @@ namespace ZahidAGA
 				WeaponComponent.TracerObject tracerObject = new WeaponComponent.TracerObject
 				{
 					HitPos = ri.point,
-					PlayerPos = Player.player.look.aim.transform.position,
+					PlayerPos = Player.LocalPlayer.look.aim.transform.position,
 					ShotTime = DateTime.Now
 				};
 				WeaponComponent.TracerLines.Add(tracerObject);
@@ -188,7 +188,7 @@ namespace ZahidAGA
 		{
 			if (WeaponOptions.DamageIndicators && ri.point != new Vector3(0f, 0f, 0f))
 			{
-				ItemGunAsset itemGunAsset = Player.player.equipment.asset as ItemGunAsset;
+				ItemGunAsset itemGunAsset = Player.LocalPlayer.equipment.asset as ItemGunAsset;
 				if (itemGunAsset != null && ri.player != null)
 				{
 					WeaponComponent.IndicatorObject indicatorObject = new WeaponComponent.IndicatorObject

@@ -30,7 +30,7 @@ namespace ZahidAGA
 					GUILayout.Label("Pixel Size Y: " + ESPOptions.y.ToString(), Array.Empty<GUILayoutOption>());
 					ESPOptions.y = (int)GUILayout.HorizontalSlider((float)ESPOptions.y, 10f, 200f, Array.Empty<GUILayoutOption>());
 				}
-				ESPOptions.ShowAmmo = GUILayout.Toggle(ESPOptions.ShowAmmo, "Ammo", Array.Empty<GUILayoutOption>());
+				//ESPOptions.ShowAmmo = GUILayout.Toggle(ESPOptions.ShowAmmo, "Ammo", Array.Empty<GUILayoutOption>());
 				if (MiscOptions.ShaderMethod == 1 && GUILayout.Button("ChamsType: Flat", "NavBox", Array.Empty<GUILayoutOption>()))
 				{
 					ESPOptions.ChamsEnabled = false;

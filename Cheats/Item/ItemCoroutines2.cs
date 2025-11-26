@@ -11,7 +11,7 @@ namespace ZahidAGA
 		// Token: 0x060001E5 RID: 485 RVA: 0x00003744 File Offset: 0x00001944
 		public static IEnumerator PickupItems()
 		{
-			for (; ; )
+			for (;;)
 			{
 				if (!DrawUtilities.ShouldRun() || !ItemOptions.AutoItemPickupFiltresiz)
 				{

@@ -10,13 +10,15 @@ using Steamworks;
 using UnityEngine;
 using UnityEngine.UIElements;
 using ZahidAGA;
+using static UnityEngine.Random;
+using static UnityEngine.Rendering.PostProcessing.SubpixelMorphologicalAntialiasing;
 
 namespace ZahidAGA
 {
     [Component]
     public class ESPComponent : MonoBehaviour
     {
-        public static FieldInfo AmmoInfo = typeof(UseableGun).GetField("ammo", BindingFlags.Instance | BindingFlags.NonPublic);
+        //public static FieldInfo AmmoInfo = typeof(UseableGun).GetField("ammo", BindingFlags.Instance | BindingFlags.NonPublic);
         public static Font ESPFont;
         public static List<Highlighter> Highlighters = new List<Highlighter>();
         public static Camera MainCamera;
@@ -455,6 +457,8 @@ namespace ZahidAGA
         {
             Player player = (Player)espObject.Object;
 
+            Vector3 screenPos = ESPComponent.MainCamera.WorldToScreenPoint(player.transform.position);
+
             if (player.life.isDead)
                 return;
 
@@ -469,14 +473,14 @@ namespace ZahidAGA
             // Add weapon information
             if (ESPOptions.ShowPlayerWeapon)
             {
-                text += ((player.equipment.asset != null) ? ("<color=#white>" + player.equipment.asset.itemName + "</color>") : "<color=#white>None</color>");
-                text2 += ((player.equipment.asset != null) ? (player.equipment.asset.itemName ?? "") : "None");
+                text += ((player.equipment.asset != null) ? ("<color=#white>" + player.equipment.asset.itemName + "</color>") : "<color=#white>Кулачки</color>");
+                text2 += ((player.equipment.asset != null) ? (player.equipment.asset.itemName ?? "") : "Кулачки"); //Fists
             }
-            if (ESPOptions.ShowAmmo && player.gameObject != null && player.equipment.asset != null)
-            {
-                text += ((byte)ESPComponent.AmmoInfo.GetValue(player.equipment.asset)).ToString();
-                text2 += ((byte)ESPComponent.AmmoInfo.GetValue(player.equipment.asset)).ToString();
-            }
+            //if (ESPOptions.ShowAmmo && player.gameObject != null && player.equipment.asset != null)
+            //{
+            //    text += ((byte)ESPComponent.AmmoInfo.GetValue(player.equipment.asset)).ToString();
+            //    text2 += ((byte)ESPComponent.AmmoInfo.GetValue(player.equipment.asset)).ToString();
+            //}
             if (ESPOptions.HitboxSize && RaycastOptions.Enabled)
             {
                 Vector3 vector = T.WorldToScreen(player.transform.position);
@@ -494,11 +498,38 @@ namespace ZahidAGA
 
             if (ESPOptions.showhotbar && player.equipment.asset != null)
             {
-                ItemTool.getIcon(player.equipment.asset.id, 40, player.equipment.asset.getState(), (handle, texture) =>
+                try
                 {
-                });
-            }
-            if (ESPOptions.ShowPlayerVehicle)
+                    // Используем IconManager для безопасного получения иконки
+                    Texture2D icon = IconManager.GetIcon( //хз, я его уже почти до делал. вот сижу лоадер пилю. да всегда находится долбаёб у которого еггвар ПИЗДА КАКОЙ. И тогда появлается стимул. (* 
+                        player.equipment.asset.id,
+                        100, // quality
+                        new byte[0], // state
+                        player.equipment.asset
+                    );
+
+                    if (icon != null)
+                    {
+                        // Рисуем иконку - используем screenPos
+                        Rect iconRect = new Rect(screenPos.x - 25, Screen.height - screenPos.y - 60, 50, 50);
+                        GUI.DrawTexture(iconRect, icon);
+                    }
+                    else //Well thats cheat issue. Or Dev. ballsack? maintained by MoonClient. XD
+                    {
+                        // Иконка еще не загружена, но IconManager уже начал процесс загрузки
+                        // Можно показать placeholder или просто не рисовать ничего
+                        // При следующем вызове иконка уже будет в кэше
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // На всякий случай обрабатываем ошибки
+                    Debug.LogError($"[ESP] Error drawing weapon icon: {ex}");
+                }}
+
+
+
+                if (ESPOptions.ShowPlayerVehicle)
             {
                 text += ((player.movement.getVehicle() != null) ? ("<color=#white>" + player.movement.getVehicle().asset.name + "</color>") : "<color=#white>No Vehicle</color>");
                 text2 += ((player.movement.getVehicle() != null) ? (player.movement.getVehicle().asset.name ?? "") : "No Vehicle");
@@ -516,12 +547,12 @@ namespace ZahidAGA
                 color = Color.red;
             }
 
-            if (ESPOptions.ShowAmmo && player.equipment.asset != null)
-            {
-                byte ammo = (byte)AmmoInfo.GetValue(player.equipment.asset);
-                text += ammo.ToString();
-                text2 += ammo.ToString();
-            }
+            //if (ESPOptions.ShowAmmo && player.equipment.asset != null)
+            //{
+            //    byte ammo = (byte)AmmoInfo.GetValue(player.equipment.asset);
+            //    text += ammo.ToString();
+            //    text2 += ammo.ToString();
+            //}
 
             // Adjust bounds for players
             bounds.size /= 2f;
